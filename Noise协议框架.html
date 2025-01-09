@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Noise协议答题页面</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f7f7;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            background: #fff;
+            padding: 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .question {
+            margin-bottom: 20px;
+        }
+        .question p {
+            font-weight: bold;
+        }
+        textarea {
+            width: 100%;
+            height: 80px;
+            margin-top: 10px;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            resize: none;
+        }
+        .submit-btn {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            font-size: 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .submit-btn:hover {
+            background-color: #45a049;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 15px;
+            background: #e8f5e9;
+            border: 1px solid #c8e6c9;
+            color: #388e3c;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Noise协议答题</h1>
+        <form id="examForm">
+            <!-- 填空题 -->
+            <div class="question">
+                <p>1. Noise协议支持在握手消息中传输(____)数据。</p>
+                <textarea name="q1" placeholder="请填写答案"></textarea>
+            </div>
+            <div class="question">
+                <p>2. Noise协议框架的核心变量包括链接密钥、加密密钥和(____)。</p>
+                <textarea name="q2" placeholder="请填写答案"></textarea>
+            </div>
+
+            <!-- 简答题 -->
+            <div class="question">
+                <p>3. Noise协议框架的主要特点是什么？</p>
+                <textarea name="q3" placeholder="请填写答案"></textarea>
+            </div>
+            <div class="question">
+                <p>4. 如何利用Noise协议实现身份验证？</p>
+                <textarea name="q4" placeholder="请填写答案"></textarea>
+            </div>
+            <div class="question">
+                <p>5. Noise协议的握手模式如何设计？</p>
+                <textarea name="q5" placeholder="请填写答案"></textarea>
+            </div>
+
+            <button type="button" class="submit-btn" onclick="submitExam()">提交答案</button>
+        </form>
+
+        <div id="result" class="result" style="display: none;"></div>
+    </div>
+
+    <script>
+        function submitExam() {
+            const correctAnswers = {
+                q1: "有效负载",
+                q2: "随机数",
+                q3: "其特点是简单、无分支的线性结构，支持多种场景的定制化实现。",
+                q4: "通过在握手阶段传输长期密钥或证书并结合DH密钥交换进行身份验证。",
+                q5: "根据通信双方的密钥可用性和认证需求选择适合的握手模式，如NN、XX等。"
+            };
+
+            const form = document.getElementById('examForm');
+            let feedbackText = '';
+            let correctCount = 0;
+            let totalQuestions = 5;
+
+            for (let key in correctAnswers) {
+                const userAnswer = form[key].value.trim();
+                if (userAnswer === correctAnswers[key]) {
+                    feedbackText += `<p>题目 ${key.slice(1)}: <strong>正确</strong></p>`;
+                    correctCount++;
+                } else {
+                    feedbackText += `<p>题目 ${key.slice(1)}: <strong>错误</strong><br>正确答案是: ${correctAnswers[key]}</p>`;
+                }
+            }
+
+            feedbackText += `<p>总得分：${correctCount} / ${totalQuestions}</p>`;
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = feedbackText;
+            resultDiv.style.display = 'block';
+        }
+    </script>
+</body>
+</html>
