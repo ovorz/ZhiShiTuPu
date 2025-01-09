@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TLS 协议答题</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f7f7;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            background: #fff;
+            padding: 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .question {
+            margin-bottom: 20px;
+        }
+        .question p {
+            font-weight: bold;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        .submit-btn {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            font-size: 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .submit-btn:hover {
+            background-color: #45a049;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 15px;
+            background: #e8f5e9;
+            border: 1px solid #c8e6c9;
+            color: #388e3c;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>TLS 协议答题页面</h1>
+        <form id="examForm">
+            <!-- 填空题 -->
+            <div class="question">
+                <p>1. TLS协议通过(____)实现服务器身份验证。</p>
+                <input type="text" name="q1" placeholder="请填写答案">
+            </div>
+            <div class="question">
+                <p>2. TLS协议的握手过程包括(____)、密钥交换和身份验证等步骤。</p>
+                <input type="text" name="q2" placeholder="请填写答案">
+            </div>
+            <div class="question">
+                <p>3. TLS 1.3中默认采用的密钥交换算法是(____)。</p>
+                <input type="text" name="q3" placeholder="请填写答案">
+            </div>
+            <div class="question">
+                <p>4. TLS协议分为(____)协议和记录协议两个主要部分。</p>
+                <input type="text" name="q4" placeholder="请填写答案">
+            </div>
+            <div class="question">
+                <p>5. 在TLS握手中，为了防止重放攻击，使用了(____)。</p>
+                <input type="text" name="q5" placeholder="请填写答案">
+            </div>
+            <button type="button" class="submit-btn" onclick="submitExam()">提交答案</button>
+        </form>
+        <div id="result" class="result" style="display: none;"></div>
+    </div>
+
+    <script>
+        function submitExam() {
+            const correctAnswers = {
+                q1: "数字证书",
+                q2: "加密套件协商",
+                q3: "ECDHE",
+                q4: "握手",
+                q5: "随机数"
+            };
+
+            const form = document.getElementById('examForm');
+            let feedbackText = '';
+            let correctCount = 0;
+            let totalQuestions = 5;
+
+            // 检查每道题的答案
+            for (let key in correctAnswers) {
+                const userAnswer = form[key].value.trim();
+                if (userAnswer === correctAnswers[key]) {
+                    feedbackText += `<p>题目 ${key.slice(1)}: <strong>正确</strong></p>`;
+                    correctCount++;
+                } else {
+                    feedbackText += `<p>题目 ${key.slice(1)}: <strong>错误</strong><br>正确答案是: ${correctAnswers[key]}</p>`;
+                }
+            }
+
+            // 显示结果
+            feedbackText += `<p>总得分：${correctCount} / ${totalQuestions}</p>`;
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = feedbackText;
+            resultDiv.style.display = 'block';
+        }
+    </script>
+</body>
+</html>
