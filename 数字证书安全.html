@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>数字证书答题页面</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f7f7;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            background: #fff;
+            padding: 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .question {
+            margin-bottom: 20px;
+        }
+        .question p {
+            font-weight: bold;
+        }
+        input[type="text"], textarea {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        textarea {
+            height: 80px;
+        }
+        .submit-btn {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            font-size: 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .submit-btn:hover {
+            background-color: #45a049;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 15px;
+            background: #e8f5e9;
+            border: 1px solid #c8e6c9;
+            color: #388e3c;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>数字证书答题页面</h1>
+        <form id="examForm">
+            <!-- 填空题 -->
+            <div class="question">
+                <p>1. 数字证书通过(____)绑定公钥与主体身份。</p>
+                <input type="text" name="q1" placeholder="请填写答案">
+            </div>
+            <div class="question">
+                <p>2. 数字证书的验证需要依赖(____)信任链。</p>
+                <input type="text" name="q2" placeholder="请填写答案">
+            </div>
+            <div class="question">
+                <p>3. 为防止伪造证书攻击，可采用(____)技术进行审计。</p>
+                <input type="text" name="q3" placeholder="请填写答案">
+            </div>
+            <div class="question">
+                <p>4. 在证书链中，根证书由(____)直接签发。</p>
+                <input type="text" name="q4" placeholder="请填写答案">
+            </div>
+
+            <!-- 简答题 -->
+            <div class="question">
+                <p>5. 数字证书如何防止中间人攻击？</p>
+                <textarea name="q5" placeholder="请填写答案"></textarea>
+            </div>
+
+            <button type="button" class="submit-btn" onclick="submitExam()">提交答案</button>
+        </form>
+        <div id="result" class="result" style="display: none;"></div>
+    </div>
+
+    <script>
+        function submitExam() {
+            const correctAnswers = {
+                q1: "加密签名",
+                q2: "CA",
+                q3: "证书透明化",
+                q4: "CA机构",
+                q5: "通过CA签名确保证书的真实性，验证时需匹配公钥和私钥。"
+            };
+
+            const form = document.getElementById('examForm');
+            let feedbackText = '';
+            let correctCount = 0;
+            let totalQuestions = 5;
+
+            // 检查每道题的答案
+            for (let key in correctAnswers) {
+                const userAnswer = form[key].value.trim();
+                if (userAnswer === correctAnswers[key]) {
+                    feedbackText += `<p>题目 ${key.slice(1)}: <strong>正确</strong></p>`;
+                    correctCount++;
+                } else {
+                    feedbackText += `<p>题目 ${key.slice(1)}: <strong>错误</strong><br>正确答案是: ${correctAnswers[key]}</p>`;
+                }
+            }
+
+            // 显示结果
+            feedbackText += `<p>总得分：${correctCount} / ${totalQuestions}</p>`;
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = feedbackText;
+            resultDiv.style.display = 'block';
+        }
+    </script>
+</body>
+</html>
